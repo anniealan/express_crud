@@ -3,10 +3,11 @@ const bodyParser = require('body-parser')
 const router = require('./router')
 const expressValidator = require('express-validator')
 const path = require('path')
-
+var methodOverride = require('method-override')
 const PORT = 3000
 const app = express()
 
+app.use(methodOverride("_method"));
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')

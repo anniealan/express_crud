@@ -4,14 +4,12 @@ head
     meta(charset="UTF-8")
     title Todo
 body
+
     h3 Edit todo
-    form(action="/update/" + todo.id method="POST")
+    form(action="/update/" + todo.id + "?_method=PUT" method="POST")
         input(type="text" name="title" placeholder="title" value=todo.title)
 
-        - if (typeof(err) !== 'undefined'){
-            each val in err
-                span= val.msg
-        -}
+        
         br
         button(type="submit") Update
 

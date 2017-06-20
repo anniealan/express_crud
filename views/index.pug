@@ -20,8 +20,8 @@ body
 
     each todo in todos
         span= todo.title   
-        form(action="/edit/" + todo.id)     
+        form(action="/edit/" + todo.id )     
             button(type="submit") Edit 
-        form(action="/delete/" + todo.id method="POST")     
+        form(action="/delete/" + todo.id + "?_method=DELETE" method="POST")     
             button(type="submit") Delete
     

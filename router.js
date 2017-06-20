@@ -16,11 +16,9 @@ router.post('/', (req, res) => {
     req.checkBody('title', 'Title is required').notEmpty()
     req.getValidationResult().then(function (result) {
         const err = result.array()
-        console.log(err)
         if (err.length <= 0) {
             const data = req.body
             data.id = Math.floor((Math.random() * 10000))
-            console.log(data)
             todos.push(data)
         }
         res.render('index', {
@@ -41,19 +39,31 @@ router.get('/edit/:id', (req, res) => {
     })
 })
 
-router.post('/update/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
     const {
         id
     } = req.params
 
-    todos.map(todo => {
-        if (todo.id == id) {
-            todo.title = req.body.title
+    req.checkBody('title', 'Title is required').notEmpty()
+    req.getValidationResult().then(function (result) {
+        const err = result.array()
+        if (err.length > 0) {
+            const todo = todos.find(todo => {
+                return todo.id == id
+            })
+            
+            res.redirect('/edit/' + id)
+        } else {
+            todos.map(todo => {
+                if (todo.id == id) {
+                    todo.title = req.body.title
+                }
+            })
+            res.redirect('/')
         }
     })
-    res.redirect('/')
 })
-router.post('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     const {
         id
     } = req.params
